@@ -14,21 +14,13 @@ public class PersonService {
 
     List<Person> personList = new ArrayList<>();
 
-    public List<Person> getAllPeople() {
-        Person p1 = new Person();
-        p1.setName("Deby");
-        p1.setLastname("Benavides");
-        p1.setAge(20);
-        p1.setId("0961458635");
+    public ResponseEntity getAllPeople() {
+        if(personList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person list is empty");
+        }
 
-        Person p2 = new Person("Made", "Ortiz", 19, "0231564789");
-
-        personList.add(p1);
-        personList.add(p2);
-        return personList;
+        return ResponseEntity.status(HttpStatus.OK).body(personList);
     }
-
-    //TODO: Create method that finds and returns person by id
 
     public ResponseEntity getPersonById(String id) {
         for(Person person: personList) {
@@ -36,7 +28,12 @@ public class PersonService {
                 return ResponseEntity.status(HttpStatus.OK).body(person);
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person with id: "+id + " not found" );
+        String message = "Person with id: "+id + " not found ";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+    public ResponseEntity createPerson(Person person) {
+        personList.add(person);
+        return ResponseEntity.status(HttpStatus.OK).body("Person successfully registered");
     }
 }
 
