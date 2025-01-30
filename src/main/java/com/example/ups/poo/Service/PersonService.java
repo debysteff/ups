@@ -15,7 +15,7 @@ public class PersonService {
     List<Person> personList = new ArrayList<>();
 
     public ResponseEntity getAllPeople() {
-        if(personList.isEmpty()) {
+        if (personList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person list is empty");
         }
 
@@ -23,17 +23,36 @@ public class PersonService {
     }
 
     public ResponseEntity getPersonById(String id) {
-        for(Person person: personList) {
-            if(id.equalsIgnoreCase(person.getId())) {
+        for (Person person : personList) {
+            if (id.equalsIgnoreCase(person.getId())) {
                 return ResponseEntity.status(HttpStatus.OK).body(person);
             }
         }
-        String message = "Person with id: "+id + " not found ";
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person with id: " + id + " not found ");
     }
+
     public ResponseEntity createPerson(Person person) {
+        if (person.getId() == null || person.getId().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id is a mandatory field");
+        }
+        if (person.getName() == null || person.getName().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is a mandatory field");
+        }
+        if (person.getLastname() == null || person.getLastname().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lastname is a mandatory field");
+        }
+        if (person.getAge() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Age is a mandatory field");
+        }
+        for (Person existingPerson : personList) {
+            if (existingPerson.getId().equalsIgnoreCase(person.getId())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Person with id alredy exists");
+            }
+        }
         personList.add(person);
         return ResponseEntity.status(HttpStatus.OK).body("Person successfully registered");
     }
 }
+
+
 
