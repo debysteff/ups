@@ -1,8 +1,7 @@
 package com.example.ups.poo.Service;
 
-import com.example.ups.poo.dto.Person;
+import com.example.ups.poo.dto.PersonDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,65 +11,65 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    List<Person> personList = new ArrayList<>();
+    List<PersonDTO> personDTOList = new ArrayList<>();
 
     public ResponseEntity getAllPeople() {
-        if (personList.isEmpty()) {
+        if (personDTOList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person list is empty");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(personList);
+        return ResponseEntity.status(HttpStatus.OK).body(personDTOList);
     }
 
     public ResponseEntity getPersonById(String id) {
-        for (Person person : personList) {
-            if (id.equalsIgnoreCase(person.getId())) {
-                return ResponseEntity.status(HttpStatus.OK).body(person);
+        for (PersonDTO personDTO : personDTOList) {
+            if (id.equalsIgnoreCase(personDTO.getId())) {
+                return ResponseEntity.status(HttpStatus.OK).body(personDTO);
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person with id: " + id + " not found ");
     }
 
-    public ResponseEntity createPerson(Person person) {
-        if (person.getId() == null || person.getId().isEmpty()) {
+    public ResponseEntity createPerson(PersonDTO personDTO) {
+        if (personDTO.getId() == null || personDTO.getId().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id is a mandatory field");
         }
-        if (person.getName() == null || person.getName().isEmpty()) {
+        if (personDTO.getName() == null || personDTO.getName().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is a mandatory field");
         }
-        if (person.getLastname() == null || person.getLastname().isEmpty()) {
+        if (personDTO.getLastname() == null || personDTO.getLastname().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lastname is a mandatory field");
         }
-        if (person.getAge() <= 0) {
+        if (personDTO.getAge() <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Age is a mandatory field");
         }
-        for (Person existingPerson : personList) {
-            if (existingPerson.getId().equalsIgnoreCase(person.getId())) {
+        for (PersonDTO existingPersonDTO : personDTOList) {
+            if (existingPersonDTO.getId().equalsIgnoreCase(personDTO.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Person with id alredy exists");
             }
         }
-        personList.add(person);
+        personDTOList.add(personDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Person successfully registered");
     }
 
-    public ResponseEntity updatePerson(Person person) {
-        for (Person per : personList) {
-            if (per.getId().equalsIgnoreCase(person.getId())) {
-                if(person.getName() != null) {
-                    per.setName(person.getName());
+    public ResponseEntity updatePerson(PersonDTO personDTO) {
+        for (PersonDTO per : personDTOList) {
+            if (per.getId().equalsIgnoreCase(personDTO.getId())) {
+                if(personDTO.getName() != null) {
+                    per.setName(personDTO.getName());
                 }
-                if(person.getLastname() != null) {
-                    per.setLastname(person.getLastname());
+                if(personDTO.getLastname() != null) {
+                    per.setLastname(personDTO.getLastname());
                 }
-                if(person.getAge() != 0) {
-                    per.setAge(person.getAge());
+                if(personDTO.getAge() != 0) {
+                    per.setAge(personDTO.getAge());
                 }
                 return ResponseEntity.status(HttpStatus.OK)
-                        .body("Person with id: " + person.getId() + " was successfully updated");
+                        .body("Person with id: " + personDTO.getId() + " was successfully updated");
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Person with id: " + person.getId() + " not found");
+                .body("Person with id: " + personDTO.getId() + " not found");
     }
 
     public ResponseEntity deletePersonById(String id) {
@@ -78,9 +77,9 @@ public class PersonService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("id: " + id + " does not have the required length (10 chars min.)");
         }
-        for(Person person : personList) {
-            if(id.equalsIgnoreCase(person.getId())) {
-                personList.remove(person);
+        for(PersonDTO personDTO : personDTOList) {
+            if(id.equalsIgnoreCase(personDTO.getId())) {
+                personDTOList.remove(personDTO);
                 return ResponseEntity.status(HttpStatus.OK)
                         .body("Person with id: " + id + " was successfully deleted");
             }

@@ -1,12 +1,9 @@
 package com.example.ups.poo.controller;
 
 import com.example.ups.poo.Service.PersonService;
-import com.example.ups.poo.dto.Person;
-import org.springframework.http.HttpStatus;
+import com.example.ups.poo.dto.PersonDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class PersonController {
@@ -27,13 +24,13 @@ public class PersonController {
     }
 
     @PostMapping("/person")
-    public ResponseEntity createPerson(@RequestBody Person person) {
-        return personService.createPerson(person);
+    public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
+        return personService.createPerson(personDTO);
     }
 
     @PutMapping("/update-person")
-    public ResponseEntity updatePerson(@RequestBody Person person) {
-        return personService.updatePerson(person);
+    public ResponseEntity updatePerson(@RequestBody PersonDTO personDTO) {
+        return personService.updatePerson(personDTO);
     }
 
     @DeleteMapping("/delete-person")
