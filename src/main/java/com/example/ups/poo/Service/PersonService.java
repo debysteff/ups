@@ -73,6 +73,22 @@ public class PersonService {
                 .body("Person with id: " + person.getId() + " not found");
     }
 
+    public ResponseEntity deletePersonById(String id) {
+        if(id != null && id.length() <10){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("id: " + id + " does not have the required length (10 chars min.)");
+        }
+        for(Person person : personList) {
+            if(id.equalsIgnoreCase(person.getId())) {
+                personList.remove(person);
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body("Person with id: " + id + " was successfully deleted");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Person with id: " + id + " was not found");
+    }
+
 }
 
 
