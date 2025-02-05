@@ -18,25 +18,25 @@ public class PersonController {
         return personService.getAllPeople();
     }
 
-    @GetMapping("/get-person")
-    public ResponseEntity getPersonById(@RequestParam String id) {
-        return personService.getPersonById(id);
-    }
-
-    @PostMapping("/person")
-    public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
-        return personService.createPerson(personDTO);
-    }
-
-    @PutMapping("/update-person")
-    public ResponseEntity updatePerson(@RequestBody PersonDTO personDTO) {
-        return personService.updatePerson(personDTO);
-    }
-
-    @DeleteMapping("/delete-person")
-    public ResponseEntity deletePerson(@RequestParam String id) {
-        return personService.deletePersonById(id);
-    }
+//    @GetMapping("/get-person")
+//    public ResponseEntity getPersonById(@RequestParam String id) {
+//        return personService.getPersonById(id);
+//    }
+//
+//    @PostMapping("/person")
+//    public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
+//        return personService.createPerson(personDTO);
+//    }
+//
+//    @PutMapping("/update-person")
+//    public ResponseEntity updatePerson(@RequestBody PersonDTO personDTO) {
+//        return personService.updatePerson(personDTO);
+//    }
+//
+//    @DeleteMapping("/delete-person")
+//    public ResponseEntity deletePerson(@RequestParam String id) {
+//        return personService.deletePersonById(id);
+//    }
 }
 
 
