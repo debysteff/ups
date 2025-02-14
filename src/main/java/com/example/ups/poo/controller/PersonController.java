@@ -16,7 +16,7 @@ public class PersonController {
 
     @GetMapping("/get-all-people")
     public ResponseEntity getAllPeople() {
-        return ResponseEntity.status(HttpStatus.OK).body(personService.getAllPeople());
+        return personService.getAllPeople();
     }
 
     @GetMapping("/get-person")
