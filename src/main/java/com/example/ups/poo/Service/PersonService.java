@@ -107,9 +107,13 @@ public class PersonService {
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The name must contain both a first and last name.");
                 }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The name is not valid");
             }
             if (personDTO.getAge() > 0) {
                 person.setAge(personDTO.getAge());
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Age must be more than zero");
             }
             personRepository.save(person);
             return ResponseEntity.status(HttpStatus.OK).body("Person with id: " + personDTO.getId() + " was successfully updated");
